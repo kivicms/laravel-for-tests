@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Events;
+
+use App\Models\User;
+use Illuminate\Broadcasting\Channel;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+
+class UserLogin
+{
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
+
+    /**
+     * The authenticated user.
+     *
+     * @var Authenticatable
+     */
+    public $user;
+
+    /**
+     * UserLogin constructor.
+     * @param User $user
+     */
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * Get the channels the event should broadcast on.
+     *
+     * @return Channel|array
+     */
+    public function broadcastOn()
+    {
+        return new PrivateChannel('channel-name');
+    }
+}
